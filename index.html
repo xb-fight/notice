@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字滚动</title>
+    <style>
+        ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            font-size: 18px;
+            background-color: lightblue;
+            border-radius: 8px;
+            height: 50px;
+            align-items: center;
+        }
+
+        .notice {
+            padding: 0 2em;
+            border-right: 2px solid #ccc;
+            height: 40px;
+            line-height: 40px;
+
+        }
+
+        .visit {
+            list-style: none;
+            height: 40px;
+            line-height: 40px;
+            overflow: hidden;
+
+        }
+
+        .visit>ul {
+            transition: .5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="notice">公告：</div>
+        <div class="visit">
+            <ul>
+            </ul>
+        </div>
+    </div>
+</body>
+<script>
+    const data = ['把大象放在冰箱要几步?', '1.打开冰箱', '2.把大象放进去', '3.关上冰箱'];
+    const ul = document.querySelector('.visit>ul');
+
+    const newData = [...data, data[0]] // 
+    for (let i in newData) {
+        const li = document.createElement('li');
+        li.innerText = newData[i];
+        ul.appendChild(li)
+    }
+
+
+
+    let Offset = 0;
+    setInterval(() => {
+        ul.style.transform = `translateY(${-Offset}px)`;
+        Offset += ul.clientHeight / newData.length;
+        if (Offset > ul.clientHeight) {
+            ul.style.transition = 'none';
+            ul.style.transform = `translateY(${0}px)`;
+            Offset = 0;
+
+            setTimeout(() => {
+                ul.style.transition = `.5s`;
+            }, 0)
+
+        }
+    }, 1000)
+
+
+
+
+</script>
+
+</html>
